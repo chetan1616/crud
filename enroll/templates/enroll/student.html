@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'enroll/css/bootstrap.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="alert text-center alert-danger row">
+            <h2> Function Based View ModelForm CRUD Project </h2>
+        </div>
+        <div class="row text-center">
+            <h3 class="col-sm-4 alert alert-success"> Add New Student </h3>
+            <h3 class="col-sm-7 offset-1 alert alert-success "> Show Student Information </h3>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{forms.non_field_errors}}
+                    {% for field in forms %}
+                    <p> {{field.label_tag}} {{field}} </p>
+                    {% for error in field.errors %}
+                            {{error}}
+                    {% endfor %}
+                    {% endfor %}
+                    <input type="submit" value="Add" class="btn btn-success">
+            </form>
+            </div>
+            <div class="col-7 offset-1">
+                {% if data %}
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                        <th>PASSWORD</th>
+                        <th>action</th>
+                    </tr>
+                    {% for data in data %}
+                        <tr>
+                            <td> {{data.id}} </td>
+                            <td> {{data.Name}} </td>
+                            <td> {{data.Email}} </td>
+                            <td> {{data.Password}} </td>
+                            <td>
+                                <a href="{% url 'update' data.id %}" class="btn btn-outline-warning">Edit</a>
+                                <a href="{% url 'DelStu' data.id %}" class="btn btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <h3 class="alert alert-info text-center"> No Record Found </h3>
+                {% endif %}
+            </table>
+            </div>
+        </div>
+            <script src="enroll/js/jquery.js"></script>
+            <script src="enroll/js/popper.js"></script>
+            <script src="enroll/js/bootstrap.js"></script>
+    </div>
+</body>
+</html>
